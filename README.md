@@ -1,8 +1,8 @@
-\# Robot Control System Documentation
+# Robot Control System Documentation
 
 
 
-\## 1. Source Path Tree
+## 1. Source Path Tree
 
 Assuming your main Arduino file is named `RobotControl`, the standard project directory structure is as follows:
 
@@ -22,15 +22,15 @@ RobotControl/
 
 
 
-\---
+---
 
 
 
-\## 2. Pin Configuration
+## 2. Pin Configuration
 
 
 
-\### Stepper Motor Pins
+### Stepper Motor Pins
 
 | Component Pin | Arduino Pin | Description |
 
@@ -46,7 +46,7 @@ RobotControl/
 
 
 
-\### DC Motor Driver Pins (PWM Supported)
+### DC Motor Driver Pins (PWM Supported)
 
 | Motor Position | Direction | Arduino Pin | Pin Type |
 
@@ -66,11 +66,11 @@ RobotControl/
 
 
 
-\*\\\*Note: Rear motor pins are defined as digital outputs. For full PWM control on rear motors, they should be connected in parallel to the front motor PWM pins or assigned to available PWM pins.\*
+**Note:** Rear motor pins are defined as digital outputs. For full PWM control on rear motors, they should be connected in parallel to the front motor PWM pins or assigned to available PWM pins.
 
 
 
-\### Joystick \& Speed Configuration
+### Joystick & Speed Configuration
 
 | Component / Variable | Value / Pin | Description |
 
@@ -90,11 +90,11 @@ RobotControl/
 
 
 
-\---
+---
 
 
 
-\## 3. Flow Chart
+## 3. Flow Chart
 
 
 
@@ -106,55 +106,55 @@ Below is the logical flow of the system's main execution loop using Mermaid synt
 
 graph TD
 
-&#x20;   A\[Start: setup] --> B\[Configure Pins as Output]
+    A[Start: setup] --> B[Configure Pins as Output]
 
-&#x20;   B --> C\[Set Stepper Speed to 100 RPM]
+    B --> C[Set Stepper Speed to 100 RPM]
 
-&#x20;   C --> D\[Main Loop: loop]
+    C --> D[Main Loop: loop]
 
-&#x20;   
+    
 
-&#x20;   D --> E\[Stepper Motor: Execute 1 Step]
+    D --> E[Stepper Motor: Execute 1 Step]
 
-&#x20;   E --> F\[Read Joystick: X and Y Values]
+    E --> F[Read Joystick: X and Y Values]
 
-&#x20;   F --> G{Is Joystick in Deadzone?}
+    F --> G{Is Joystick in Deadzone?}
 
-&#x20;   
+    
 
-&#x20;   G -- No --> H\[Determine Active Direction 1-4]
+    G -- No --> H[Determine Active Direction 1-4]
 
-&#x20;   H --> I\[Accelerate: currentSpeed += 0.82]
+    H --> I[Accelerate: currentSpeed += 0.82]
 
-&#x20;   
+    
 
-&#x20;   G -- Yes --> J\[Decelerate: currentSpeed -= 0.82]
+    G -- Yes --> J[Decelerate: currentSpeed -= 0.82]
 
-&#x20;   
+    
 
-&#x20;   I --> K\[Clamp Speed: Max 191]
+    I --> K[Clamp Speed: Max 191]
 
-&#x20;   J --> L\[Clamp Speed: Min 0]
+    J --> L[Clamp Speed: Min 0]
 
-&#x20;   
+    
 
-&#x20;   K --> M{currentSpeed > 0?}
+    K --> M{currentSpeed > 0?}
 
-&#x20;   L --> M
+    L --> M
 
-&#x20;   
+    
 
-&#x20;   M -- Yes --> N\[motoruGorevlendir: Apply Direction and Speed]
+    M -- Yes --> N[motoruGorevlendir: Apply Direction and Speed]
 
-&#x20;   M -- No --> O\[stopAll: Halt All Motors]
+    M -- No --> O[stopAll: Halt All Motors]
 
-&#x20;   
+    
 
-&#x20;   N --> P\[Delay 5ms]
+    N --> P[Delay 5ms]
 
-&#x20;   O --> P
+    O --> P
 
-&#x20;   P --> D
+    P --> D
 
 ```
 
@@ -217,4 +217,3 @@ graph TD
 \* \*\*Brief:\*\* Immediately halts all movement by setting all front motor PWM values to `0` and all rear motor digital states to `LOW`.
 
 \* \*\*Parameters:\*\* None.
-
